@@ -2,17 +2,40 @@ import React from 'react';
 import ToDoItem from './ToDoItem';
 import task from './task';
 import NewTask from './NewTask';
+import Filter from './Filter';
 
 class App extends React.Component{
    constructor(){
       super()
       this.state = {
-         todos: task
+         todos: task,
+         filtered: false,
+         prevTodos: []
       }
       this.handleChange = this.handleChange.bind(this)
       this.addNewTask = this.addNewTask.bind(this)
+      this.filterCompleted = this.filterCompleted.bind(this)
    }
    
+   filterCompleted(){
+      if(this.state.filtered == false){
+         const filtered = this.state.todos.filter(function (value, index, arr){
+            return value.completed === false;
+         });
+
+         this.setState({
+            prevTodos: this.state.todos,
+            todos: filtered,
+            filtered: true
+         })
+      }else{
+         this.setState({
+            todos: this.state.prevTodos,
+            filtered: false
+         })
+      }
+   }
+
    handleChange(id){
       this.setState(prevState =>{
          const updatedTodos = prevState.todos.map( todo=>{
@@ -49,6 +72,7 @@ class App extends React.Component{
       handleChange={this.handleChange}/>)
       return(
          <div className='todo-list'>
+            <Filter filterCompleted={this.filterCompleted}/>
             {todoItems}
             <NewTask addNewTask={this.addNewTask}/>
          </div>    
