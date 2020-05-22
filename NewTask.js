@@ -3,8 +3,8 @@ import React from 'react';
 function NewTask(props){
    return(
       <div className="todo-add">
-         <input />
-         <button onClick={()=>props.addNewTask()}>add</button>
+         <input id='newTask' />
+         <button onClick={()=>props.addNewTask(document.getElementById('newTask').value)}>add</button>
       </div>
    )
 }

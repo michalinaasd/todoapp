@@ -28,29 +28,30 @@ class App extends React.Component{
       })
    }
 
-   addNewTask(){
-      const newItem = [
+   addNewTask(input){
+      const newItem =
          {
-            id: 66,
-            text: 'asd',
+            id: Math.random(),
+            text: input,
             completed: false
-         }
-      ]
-      const items = [...this.state.todos, newItem];
+         };
+      //const items = [...this.state.todos, newItem];
+      this.state.todos.push(newItem);
       this.setState({
-         todos: items
-      })
+         todos: this.state.todos
+
+      }
+      )
    }
 
    render(){
-      const todoItems = this.state.todos.map(item => <ToDoItem item={item}
+      const todoItems = this.state.todos.map(item => <ToDoItem key={item.id} item={item}
       handleChange={this.handleChange}/>)
       return(
          <div className='todo-list'>
             {todoItems}
             <NewTask addNewTask={this.addNewTask}/>
-         </div>
-         
+         </div>    
       )
    }
 }
