@@ -3,6 +3,7 @@ import ToDoItem from './ToDoItem';
 import task from './task';
 import NewTask from './NewTask';
 import Filter from './Filter';
+import Navbar from './Navbar';
 
 class App extends React.Component{
    constructor(){
@@ -15,8 +16,18 @@ class App extends React.Component{
       this.handleChange = this.handleChange.bind(this)
       this.addNewTask = this.addNewTask.bind(this)
       this.filterCompleted = this.filterCompleted.bind(this)
+      this.deleteTask = this.deleteTask.bind(this)
    }
-   
+   deleteTask(item){
+      this.state.todos.splice(this.state.todos.indexOf(item),1);
+      if(this.state.filtered==true){
+         this.state.prevTodos.splice(this.state.todos.indexOf(item),1);
+      }
+      this.setState({
+         todos: this.state.todos,
+         prevTodos: this.state.prevTodos
+      })
+   }
    filterCompleted(){
       if(this.state.filtered == false){
          const filtered = this.state.todos.filter(function (value, index, arr){
@@ -51,31 +62,39 @@ class App extends React.Component{
       })
    }
 
-   addNewTask(input){
+   addNewTask(input){    
       const newItem =
          {
             id: Math.random(),
-            text: input,
+            text: input.value,
             completed: false
          };
       //const items = [...this.state.todos, newItem];
       this.state.todos.push(newItem);
+      if(this.state.filtered==true){
+         this.state.prevTodos.push(newItem);
+
+      }
+      input.value="";
       this.setState({
          todos: this.state.todos
-
       }
       )
    }
 
    render(){
       const todoItems = this.state.todos.map(item => <ToDoItem key={item.id} item={item}
-      handleChange={this.handleChange}/>)
+      handleChange={this.handleChange} deleteTask={this.deleteTask}/>)
+     
       return(
          <div className='todo-list'>
+            <Navbar />
             <Filter filterCompleted={this.filterCompleted}/>
-            {todoItems}
-            <NewTask addNewTask={this.addNewTask}/>
-         </div>    
+            <div className='todo-items'>
+               {todoItems}
+               <NewTask addNewTask={this.addNewTask}/>
+            </div>
+         </div>
       )
    }
 }
