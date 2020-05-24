@@ -4,6 +4,7 @@ import task from './task';
 import NewTask from './NewTask';
 import Filter from './Filter';
 import Navbar from './Navbar';
+import EmptyList from './EmptyList';
 
 class App extends React.Component{
    constructor(){
@@ -83,19 +84,37 @@ class App extends React.Component{
    }
 
    render(){
-      const todoItems = this.state.todos.map(item => <ToDoItem key={item.id} item={item}
-      handleChange={this.handleChange} deleteTask={this.deleteTask}/>)
-     
-      return(
-         <div className='todo-list'>
-            <Navbar />
-            <Filter filterCompleted={this.filterCompleted}/>
-            <div className='todo-items'>
-               {todoItems}
-               <NewTask addNewTask={this.addNewTask}/>
+      if(this.state.todos.length === 0){
+         return(
+            <div className='todo-list'>
+               <Navbar />
+               <Filter filterCompleted={this.filterCompleted}/>
+               <div className='todo'>
+                  <div className='todo-items'>
+                     <EmptyList />
+                  </div>
+                     <NewTask addNewTask={this.addNewTask}/>
+               </div>
             </div>
-         </div>
-      )
+         )
+      }else{
+         const todoItems = this.state.todos.map(item => <ToDoItem key={item.id} item={item}
+         handleChange={this.handleChange} deleteTask={this.deleteTask}/>)
+         return(
+            <div className='todo-list'>
+               <Navbar />
+               <Filter filterCompleted={this.filterCompleted}/>
+               <div className='todo'>
+                  <div className='todo-items'>
+                     {todoItems}
+                  </div>
+                     <NewTask addNewTask={this.addNewTask}/>
+               </div>
+            </div>
+         )
+      }
+     
+     
    }
 }
 

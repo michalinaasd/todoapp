@@ -12,30 +12,56 @@
 }
 .todo-items{
    display: flex;
-   height: 100%;
    align-items: left;
    flex-direction: column;
    justify-content: flex-start;
-   width: 100%;
-   overflow: scroll;
+   min-width: 500px;
+   max-width: 500px;
+   height: 100%;
+   overflow-y: scroll;
+   overflow-x: hidden;
+   scrollbar-width: none;
 }
+
 .todo-item{
    display: flex;
    flex-direction: row;
    align-items: center;
    justify-content: space-between;
    margin-left:50px;
-   padding-right: 100px;
+   margin-right: 50px;
    border-bottom: 2px solid orangered;
 }
 .test{
    display: flex;
    align-items: center;
 }
+.test p{
+   overflow: hidden;
+   max-width: 200px;
+   word-wrap: break-word;
+}
 .todo-filter{
    display: flex;
    flex-direction: row;
    align-items: center;
+}
+.todo{
+   display: flex;
+   flex-direction: column;
+   align-items: center;
+   height:300px ;
+   width: 90%;
+}
+.todo-empty{
+   display: flex;
+   justify-content: center;
+   border-bottom: 2px solid orangered;
+   width: 50%;
+   margin: 0  auto 0 auto
+}
+.todo-empty p{
+   font-size: 20px;
 }
 .todo-add{
    padding-top: 20px;
@@ -80,22 +106,6 @@
    border-radius: 10px;
 }
 
-.add-button:before {
-   content: '';
-   background: linear-gradient(45deg, #ff0000, #ff7300, #fffb00ff, #ff0000);
-   position: absolute;
-   top: -2px;
-   left:-2px;
-   background-size: 100%;
-   z-index: -1;
-   filter: blur(5px);
-   width: calc(100% + 4px);
-   height: calc(100% + 4px);
-   animation: glowing 20s linear infinite;
-   opacity: 0;
-   transition: opacity .3s ease-in-out;
-   border-radius: 10px;
-}
 
 .add-button:active {
    color: white;
